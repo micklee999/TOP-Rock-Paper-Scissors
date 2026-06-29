@@ -8,6 +8,12 @@
 </head>
 
 <body>
+    <button class="btn">Rock</button>
+    <button class="btn">Paper</button>
+    <button class="btn">Scissors</button>
+    <div class="result"></div>
+    <div class="currentScore"></div>
+    <div class="winner"></div>
     <script>
         function getComputerChoice() {
             let randNum = Math.floor(Math.random() * 10)
@@ -25,52 +31,77 @@
 
         //console.log(getComputerChoice());
 
-        function getHumanChoice() {
-            let selectedChoice = (prompt("What is your choice?")).toLowerCase()
-            return selectedChoice
-        }
+        // function getHumanChoice() {
+        //     let selectedChoice = (prompt("What is your choice?")).toLowerCase()
+        //     return selectedChoice
+        // }
+
+
 
         //console.log(getHumanChoice());
-        function playGame() {
-            let humanScore = 0;
-            let computerScore = 0;
-            let i = 0;
-            function playRound(humanChoice = getHumanChoice(), computerChoice = getComputerChoice()) {
+        function playGame(selectedOption) {
+            function playRound(humanChoice = selectedOption, computerChoice = getComputerChoice()) {
+
                 if (humanChoice == "rock" && computerChoice == "Scissors") {
-                    console.log("You win! Rock beats Scissors")
+                    log = "You win! Rock beats Scissors"
                     humanScore++
                 }
                 else if (humanChoice == "rock" && computerChoice == "Paper") {
-                    console.log("You lose! Paper beats Rock")
+                    log = "You lose! Paper beats Rock"
                     computerScore++
                 }
                 else if (humanChoice == "paper" && computerChoice == "Rock") {
-                    console.log("You win! Paper beats Rock")
+                    log = "You win! Paper beats Rock"
                     humanScore++
                 }
                 else if (humanChoice == "paper" && computerChoice == "Scissors") {
-                    console.log("You lose! Scissors beats Paper")
+                    log = "You lose! Scissors beats Paper"
                     computerScore++
                 }
                 else if (humanChoice == "scissors" && computerChoice == "Paper") {
-                    console.log("You win! Scissors beats Paper")
+                    log = "You win! Scissors beats Paper"
                     humanScore++
                 }
                 else if (humanChoice == "scissors" && computerChoice == "Rock") {
-                    console.log("You lose! Rock beats scissors")
+                    log = "You lose! Rock beats scissors"
                     computerScore++
                 }
                 else if (humanChoice == computerChoice.toLowerCase()) {
-                    console.log(`You draw! You both picked ${humanChoice}!`)
+                    log = `You draw! You both picked ${humanChoice}!`
                 }
+                console.log(log)
             }
-            while (i < 5) {
-                    playRound();
-                    i++
-                console.log(`The current score is Human:${humanScore} and Computer:${computerScore}.`)
-                }
+            playRound()
         }
-        console.log(playGame())
+        // console.log(playGame())
+
+        let humanScore = 0;
+        let computerScore = 0;
+        let i = 0;
+        let log = ''
+
+        let button = document.querySelectorAll('button')
+        button.forEach(btn => btn.addEventListener('click', e => {
+            let selectedOption = e.target.textContent.toLowerCase();
+            console.log(selectedOption)
+            playGame(selectedOption)
+            let result = document.querySelector('.result')
+            result.innerText = log
+            let winner = document.querySelector('.winner')
+            winner.textContent = ''
+            let currentScore = document.querySelector('.currentScore')
+            currentScore.textContent = `The current score is Human:${humanScore} and Computer:${computerScore}.`
+            if (humanScore == 5) {
+                winner.textContent = 'Human won!'
+                humanScore = 0;
+                computerScore = 0;
+            }
+            else if (computerScore == 5) { 
+                winner.textContent = 'Computer won!'
+                humanScore = 0;
+                computerScore = 0;
+             }
+        }))
     </script>
 </body>
 
